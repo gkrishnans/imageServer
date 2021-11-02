@@ -16,14 +16,12 @@ def success():
         f.save(path)
         return render_template("success.html", name = f.filename)  
 
-@app.route('/getImages')  
-def getImages():
-    return send_file(
-        'vcfb3.jpeg',
-        as_attachment=True,
-        attachment_filename=UPLOAD_FOLDER+'/vcfb3.jpeg',
-        mimetype='image/jpeg'
-    )
+
+
+@app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    return send_from_directory(directory=UPLOAD_FOLDER, filename=filename,path="./")
+
 
 
 if __name__ == '__main__':  
