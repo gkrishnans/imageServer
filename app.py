@@ -1,31 +1,30 @@
-from flask import render_template,Flask, request
-from flask.json import jsonify
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return "<p>Hello, World!</p>"
-
-
-@app.route("/greeting")
-def greeting():
-    return render_template("index.html")
-
+from flask import *  
+app = Flask(__name__)  
 import os
+
 UPLOAD_FOLDER = './images'
 
+@app.route('/')  
+def upload():  
+    return render_template("file_upload_form.html")  
 
-@app.route("/fileUpload", methods=['GET', 'POST'])
-def fileUpload():
-    if request.method == 'POST':
-        file1 = request.files['file1']
-        path = os.path.join(UPLOAD_FOLDER, file1.filename)
-        file1.save(path)
-        return jsonify({"message":"image uploaded successfully", "success":True})
+@app.route('/success', methods = ['POST'])  
+def success():  
+    if request.method == 'POST':  
+        f = request.files['file']  
+        path = os.path.join(UPLOAD_FOLDER, f.filename)
+        f.save(path)
+        return render_template("success.html", name = f.filename)  
+
+@app.route('/getImages')  
+def getImages():
+    return send_file(
+        'vcfb3.jpeg',
+        as_attachment=True,
+        attachment_filename=UPLOAD_FOLDER+'/vcfb3.jpeg',
+        mimetype='image/jpeg'
+    )
 
 
-@app.route("/getAllImages", methods=['GET', 'POST'])
-def getAllImages():
-        data = []
-        return jsonify({"message":"image downloaded successfully", "data":data,"success":True})
+if __name__ == '__main__':  
+    app.run(debug = True)
