@@ -4,6 +4,7 @@ from imageOperations import largeImage, mediumImage, smallImage
 app = Flask(__name__)  
 import os
 
+url = "http://127.0.0.1:5000"
 
 UPLOAD_FOLDER = './images'
 
@@ -15,16 +16,17 @@ def upload():
 @app.route('/os')  
 def result():  
     data = {
-        "original":"http://127.0.0.1:5000/uploads/acf.jpeg",
-        "small":"http://127.0.0.1:5000/uploads/s_acf.jpeg",
-        "medium":"http://127.0.0.1:5000/uploads/m_acf.jpeg",
-        "large":"http://127.0.0.1:5000/uploads/l_acf.jpeg",
+        "original":url + "/uploads/acf.jpeg",
+        "small":url + "/uploads/s_acf.jpeg",
+        "medium":url + "/uploads/m_acf.jpeg",
+        "large":url + "/uploads/l_acf.jpeg",
 
     }
     return render_template("result.html",data=data)  
 
 @app.route('/success', methods = ['POST'])  
 def success():  
+
     if request.method == 'POST':  
         f = request.files['file']  
         filename = f.filename
@@ -35,16 +37,17 @@ def success():
         largeImage(filename)
         #return render_template("success.html", name = f.filename)  
         data = {
-        "original":"http://127.0.0.1:5000/uploads/" + filename,
-        "small":"http://127.0.0.1:5000/uploads/s_" +filename,
-        "medium":"http://127.0.0.1:5000/uploads/m_" + filename,
-        "large":"http://127.0.0.1:5000/uploads/l_" + filename,
+        "name" : filename,
+        "original":url+"/getImage/" + filename,
+        "small":url + "/getImage/s_" +filename,
+        "medium":url + "/getImage/m_" + filename,
+        "large":url + "/getImage/l_" + filename,
         }
         return render_template("result.html",data=data)
 
 
 
-@app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
+@app.route('/getImage/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     return send_from_directory(directory=UPLOAD_FOLDER, filename=filename,path="./")
 

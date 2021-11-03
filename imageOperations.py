@@ -3,7 +3,6 @@ from PIL import Image
 def rotate():
     im = Image.open("./images/gk_image2.jpg")  
     im.show()  
-    #Show rotated Image  
     imim = im.rotate(45)  
     imim.show()
 
