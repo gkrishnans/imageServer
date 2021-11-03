@@ -1,11 +1,11 @@
 <html>  
 <head>  
     <title>upload</title>  
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+    <link rel="stylesheet" href="../static/styles/styles.css">
 </head>  
 <body> 
     <form action = "/success" method = "post" enctype="multipart/form-data">  
-        <input type="file" name="file" class="upload"/>  
+        <input type="file" name="file" class="upload" multiple/>  
         <p>Drag your files here or click in this area.</p>
         <button type="submit">Upload</button>
       </form>

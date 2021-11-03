@@ -1,11 +1,10 @@
 from flask import *
-
-from imageOperations import largeImage, mediumImage, smallImage  
-app = Flask(__name__)  
 import os
+from imageOperations import largeImage, mediumImage, smallImage  
+
+app = Flask(__name__)  
 
 url = "http://127.0.0.1:5000"
-
 UPLOAD_FOLDER = './images'
 
 @app.route('/')  
@@ -26,9 +25,9 @@ def result():
 
 @app.route('/success', methods = ['POST'])  
 def success():  
-
     if request.method == 'POST':  
         f = request.files['file']  
+        print(f)
         filename = f.filename
         path = os.path.join(UPLOAD_FOLDER, filename)
         f.save(path)
