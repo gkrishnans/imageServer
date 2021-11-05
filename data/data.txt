@@ -1,2 +1,2 @@
-total_no_of_upload:1
+total_no_of_upload:6
 total_no_of_download:0

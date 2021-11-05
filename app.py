@@ -21,8 +21,9 @@ def upload():
 
 @app.route('/getAllImages')
 def getAllImages():
-    org_images = [url + "/uploads/" + file for file in os.listdir(UPLOAD_FOLDER) if "_" not in file]
+    org_images = [url + "/getImage/" + file for file in os.listdir(UPLOAD_FOLDER) if "m_" not in file and "s_" not in file and "l_" not in file ]
     print( org_images)
+    return {'images' : org_images}
 
     return render_template("view_images.html",payload = {'images' : org_images})  
 
@@ -36,11 +37,11 @@ def result():
     }
     return render_template("result.html",data=data)  
 
-def imageSaver(f):
-        print(f)
-        filename = f.filename
+def imageSaver(file):
+        print(file)
+        filename = file.filename
         path = os.path.join(UPLOAD_FOLDER, filename)
-        f.save(path)
+        file.save(path)
         smallImage(filename)
         mediumImage(filename)
         largeImage(filename)
@@ -54,13 +55,13 @@ def imageSaver(f):
         }
 
 @app.route('/uploadFiles', methods = ['POST'])  
-def success():  
+def fileUpload():  
     if request.method == 'POST':  
         files = request.files.getlist("files")
         for file in files:
             imageSaver(file)
         writeDataToFile("total_no_of_upload",int(getDataFromFile("total_no_of_upload"))+1)
-        return {'success' : True}
+        return redirect(url_for('getAllImages'))
         #return render_template("result.html",data=data)
 
 
