@@ -1,5 +1,6 @@
 from flask import *
 import os
+from fileOperations import getDataFromFile, writeDataToFile
 from imageOperations import largeImage, mediumImage, smallImage  
 
 app = Flask(__name__)  
@@ -7,10 +8,23 @@ app = Flask(__name__)
 url = "http://127.0.0.1:5000"
 UPLOAD_FOLDER = './images'
 
-@app.route('/')  
-def upload():  
-    return render_template("file_upload_form.html")  
 
+@app.route('/')  
+def upload():
+    payload = {
+        "total_number_of_images" : len(os.listdir(UPLOAD_FOLDER))*4,
+        "total_number_of_upload" : getDataFromFile("total_no_of_upload"),
+        "total_number_of_download" : getDataFromFile("total_no_of_download")
+    }  
+    return render_template("file_upload_form.html",payload=payload)  
+
+
+@app.route('/getAllImages')
+def getAllImages():
+    org_images = [url + "/uploads/" + file for file in os.listdir(UPLOAD_FOLDER) if "_" not in file]
+    print( org_images)
+
+    return render_template("view_images.html",payload = {'images' : org_images})  
 
 @app.route('/os')  
 def result():  
@@ -19,14 +33,10 @@ def result():
         "small":url + "/uploads/s_acf.jpeg",
         "medium":url + "/uploads/m_acf.jpeg",
         "large":url + "/uploads/l_acf.jpeg",
-
     }
     return render_template("result.html",data=data)  
 
-@app.route('/success', methods = ['POST'])  
-def success():  
-    if request.method == 'POST':  
-        f = request.files['file']  
+def imageSaver(f):
         print(f)
         filename = f.filename
         path = os.path.join(UPLOAD_FOLDER, filename)
@@ -42,7 +52,16 @@ def success():
         "medium":url + "/getImage/m_" + filename,
         "large":url + "/getImage/l_" + filename,
         }
-        return render_template("result.html",data=data)
+
+@app.route('/uploadFiles', methods = ['POST'])  
+def success():  
+    if request.method == 'POST':  
+        files = request.files.getlist("files")
+        for file in files:
+            imageSaver(file)
+        writeDataToFile("total_no_of_upload",int(getDataFromFile("total_no_of_upload"))+1)
+        return {'success' : True}
+        #return render_template("result.html",data=data)
 
 
 
