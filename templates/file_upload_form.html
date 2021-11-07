@@ -3,11 +3,14 @@
     <title>upload</title>  
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
 </head>  
+
 <body> 
-    <form action = "/uploadFiles" method = "post" enctype="multipart/form-data">  
-        <input type="file" id="file" name="files" multiple class="upload"/>   
-        <p>Drag your files here or click in this area.</p>
-        <button type="submit">Upload</button>
+
+
+    <form id="form" action = "/uploadFiles" method = "post" enctype="multipart/form-data">  
+        <input type="file" name="files" class="upload" multiple/>  
+        <p id="form">Drag your files here or click in this area.</p>
+        <button id="form" type="submit">Upload</button>
       </form>
       <div class="sidebar" class="center">
         <div id="balls" class="center">{{payload.total_number_of_download}}</div>
@@ -19,7 +22,16 @@
         <div id="text" class="center">number of downloads</div>
         <div id="text" class="center">number of uploads</div>
         <div id="text" class="center">number of total images</div>
-        <!-- <div id="text" class="center">1</div> -->
+        <div>
+            <form action = "/tags" enctype="multipart/form-data">
+                <button class= "button-submit" type="submit">View Tags</button>
+            </form>
+            <form action = "/getAllImages" enctype="multipart/form-data">
+                <button class= "button-submit" type="submit">View All Images</button>
+            </form>
+        </div>
     </div>
+
+
 </body>
 </html>

@@ -1,26 +1,215 @@
 <!DOCTYPE html>
 <html>
+    <head>    
+        <style>
+            * {
+            box-sizing: border-box;
+            }
+
+            body {
+            margin: 0;
+            font-family: Arial;
+            }
+
+            .header {
+            text-align: center;
+            padding: 32px;
+            }
+            .row {
+            display: -ms-flexbox; /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap; /* IE10 */
+            flex-wrap: wrap;
+            padding: 0 4px;
+            }
+
+            /* Create four equal columns that sits next to each other */
+            .column {
+            -ms-flex: 25%; /* IE10 */
+            flex: 25%;
+            max-width: 25%;
+            padding: 0 4px;
+            }
+
+            .image:hover .overlay {
+            opacity: 1;
+            }
+
+            .column img {
+            margin-top: 8px;
+            vertical-align: middle;
+            width: 100%;
+            }
+
+
+            /* Responsive layout - makes a two column-layout instead of four columns */
+            @media screen and (max-width: 800px) {
+            .column {
+                -ms-flex: 50%;
+                flex: 50%;
+                max-width: 50%;
+            }
+            }
+
+            /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+            @media screen and (max-width: 600px) {
+            .column {
+                -ms-flex: 100%;
+                flex: 100%;
+                max-width: 100%;
+            }
+            }
+
+
+            /*DROP DOWN BUTTON STYLING*/
+
+            .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;   
+            text-decoration: none;
+            }
+
+            .dropdown {
+            position: relative;
+            display: inline-block;
+            }
+
+            .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            margin-top: 16px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            width: 200;
+            z-index: 1;
+            }
+
+            .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            }
+
+            .dropdown-content a:hover {background-color: #f1f1f1}
+
+            .dropdown:hover .dropdown-content {
+            display: block;
+            }
+
+            .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+            }
+
+            /**
+            
+            ------------
+            
+            **/
+
+            .container {
+            position: relative;
+            }
+            .container:hover .overlay {
+            opacity: 1;
+            }
+
+            .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            transition: .10s ease;
+            opacity: 0;
+            }
+
+
+            .image {
+            display: block;
+            width: 100%;
+            height: auto;
+            }
+
+
+            .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            }
+
+            .button1 {
+            background-color: white; 
+            color: black; 
+            border: 2px solid #4CAF50;
+            }
+
+            .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+            }
+
+            .center{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .button2 {
+            background-color: white; 
+            color: black; 
+            border: 2px solid #008CBA;
+            }
+
+            .button2:hover {
+            background-color: #008CBA;
+            color: white;
+            }
+
+        </style>
+
+    </head>
 <body>
 
-<h2>JavaScript HTML DOM</h2>
-<p>Add a new HTML Element.</p>
 
-<div id="div1">
-<p id="p1">This is a paragraph.</p>
-<p id="p2">This is another paragraph.</p>
+<div class="row"> 
+    <br><br>
+    {% for image in payload.images %}
+    <div class="column">
+        <div class="container">
+            <img src={{image.url}} class="image" style="width:100%"/>
+            <div class="overlay center">
+                <form method ="post" action="/tags/add">
+                    <button class="button button2" type="submit" name="addTag" value={{image.name}}> add tag </button>
+                    <div class="dropdown">
+                        <a class="dropbtn" href="/downloads/image?file={{image.name}}">Download</a>
+                        <div class="dropdown-content">
+                            <a href="/downloads/image?file=s_{{image.name}}">small size</a>
+                            <a href="/downloads/image?file=l_{{image.name}}">large size</a>
+                            <a href="/downloads/image?file=m_{{image.name}}">medium size</a>
+                        </div>
+                      </div>
+                  </form> 
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-
-<script>
-for (let i = 0; i < collection.length; i++) {
-    console.log(collection[i]);
-    }
-
-const para = document.createElement("p");
-const node = document.createTextNode("This is new.");
-para.appendChild(node);
-const element = document.getElementById("div1");
-element.appendChild(para);
-</script>
 
 </body>
 </html>

@@ -9,7 +9,7 @@ def rotate():
 
 def smallImage(img_name):
     im = Image.open("./images/" + img_name)  
-    im.thumbnail((150,150))  
+    im.thumbnail((220,220))  
     im.save('images/'+ "s_"+img_name)  
     #image1 = Image.open('images/smallImage.jpg')  
     #image1.show() 
