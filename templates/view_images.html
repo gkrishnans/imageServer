@@ -131,6 +131,17 @@
             opacity: 0;
             }
 
+            .overlay-view {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            transition: .10s ease;
+            }
+
 
 
             .image {
@@ -185,33 +196,24 @@
                 position: relative;
                 bottom: 50%;
                 background-color:black;
-                width: 150;
+                width: 100%;
                 height: 150;
-                padding: 10;
                 text-decoration: none;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-
-                border: none;
-                color: white;
-                cursor: pointer;
+                margin: 0;
             }
         </style>
 
     </head>
 <body>
 
-
 <div class="row"> 
-    <br><br>
     {% for image in payload.images %}
     <div class="column">
         <div class="container">
             <img src={{image.url}} class="image" style="width:100%"/>
-            <form method ="post" action="/viewImage" >
-                <button class="viewBtn button overlay" name="image_name" value="{{image.name}}" type="submit" onclick="fun()">View</button>
-            </form>
             <div class="overlay center">
                 <form method ="post" action="/tags/add">
                     <button class="button button2" type="submit" name="addTag" value={{image.name}}> add tag </button>
@@ -225,6 +227,9 @@
                       </div>
                   </form> 
             </div>
+            <form method ="post" action="/getImage/{{image.name}}" >
+                <button class="viewBtn button overlay " name="filename" value="{{image.name}}" type="submit">View</button>
+            </form>
         </div>
     </div>
     {% endfor %}
