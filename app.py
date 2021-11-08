@@ -26,8 +26,6 @@ def getAllImages():
     org_images = [{"url":url + "/getImage/" + file , "name":file} for file in os.listdir(UPLOAD_FOLDER) if "m_" not in file and "s_" not in file and "l_" not in file ]
     return render_template("view_images.html",payload = {'images' : org_images})  
 
-
-
 #uploading single or a multiple file 
 @app.route('/uploadFiles', methods = ['POST'])  
 def fileUpload():  
