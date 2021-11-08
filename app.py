@@ -1,4 +1,3 @@
-from types import MethodDescriptorType
 from flask import *
 import os
 from fileOperations import getDataFromFile, writeDataToFile
@@ -6,9 +5,8 @@ from imageOperations import imageSaver
 from database import mongo
 from mongodbOperations import addTags, getAllTags
 app = Flask(__name__)  
+from config import url,UPLOAD_FOLDER
 
-url = "http://127.0.0.1:5000"
-UPLOAD_FOLDER = './images'
 
 @app.route('/')  
 def upload():

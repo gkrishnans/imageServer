@@ -1,4 +1,5 @@
-DATA_FILE = './data/data.txt'
+
+from config import DATA_FILE
 
 def getDataFromFile(key):
     dataItems = open(DATA_FILE,'r').read().split()

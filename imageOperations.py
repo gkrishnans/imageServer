@@ -1,8 +1,9 @@
 from PIL import Image  
 import os
 
+from config import UPLOAD_FOLDER
 
-UPLOAD_FOLDER = './images'
+
 
 def rotate():
     im = Image.open("./images/gk_image2.jpg")  
