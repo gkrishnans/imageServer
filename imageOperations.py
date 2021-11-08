@@ -1,4 +1,8 @@
 from PIL import Image  
+import os
+
+
+UPLOAD_FOLDER = './images'
 
 def rotate():
     im = Image.open("./images/gk_image2.jpg")  
@@ -25,3 +29,12 @@ def largeImage(img_name):
     im = Image.open("./images/" + img_name)  
     im.thumbnail((1500,1500))  
     im.save('images/'+ "l_"+img_name)  
+
+
+def imageSaver(file):
+        filename = file.filename
+        path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(path)
+        smallImage(filename)
+        mediumImage(filename)
+        largeImage(filename)
