@@ -277,6 +277,19 @@
                 opacity: 0;
                 }
     
+                .overlay-view {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    width: 100%;
+                    transition: .10s ease;
+                    opacity: 0;
+                    background-color: blue;
+                    }
+        
     
                 .image {
                 display: block;

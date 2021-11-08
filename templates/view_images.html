@@ -115,7 +115,7 @@
             .container {
             position: relative;
             }
-            .container:hover .overlay {
+            .container:hover .overlay{
             opacity: 1;
             }
 
@@ -132,12 +132,12 @@
             }
 
 
+
             .image {
             display: block;
             width: 100%;
             height: auto;
             }
-
 
             .button {
             background-color: #4CAF50; /* Green */
@@ -181,6 +181,22 @@
             color: white;
             }
 
+            .viewBtn{
+                position: relative;
+                bottom: 50%;
+                background-color:black;
+                width: 150;
+                height: 150;
+                padding: 10;
+                text-decoration: none;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+
+                border: none;
+                color: white;
+                cursor: pointer;
+            }
         </style>
 
     </head>
@@ -193,6 +209,9 @@
     <div class="column">
         <div class="container">
             <img src={{image.url}} class="image" style="width:100%"/>
+            <form method ="post" action="/viewImage" >
+                <button class="viewBtn button overlay" name="image_name" value="{{image.name}}" type="submit" onclick="fun()">View</button>
+            </form>
             <div class="overlay center">
                 <form method ="post" action="/tags/add">
                     <button class="button button2" type="submit" name="addTag" value={{image.name}}> add tag </button>
@@ -212,4 +231,9 @@
 </div>
 
 </body>
+<script>
+    function fun(){
+        console.log("ada poda");
+    }
+</script>
 </html>

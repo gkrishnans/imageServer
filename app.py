@@ -67,8 +67,6 @@ def addTagss():
     }
     return render_template("tagScreen.html",payload = data,data = json,state="TagListBlock",message="",tags=list(getAllTags()))  
 
-
-
 @app.route('/addTag',methods = ['POST'])
 def updateTags():
     tags = request.form.get("tag")
