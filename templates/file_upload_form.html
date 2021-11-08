@@ -7,21 +7,15 @@
 <body> 
 
 
-    <form id="form" action = "/uploadFiles" method = "post" enctype="multipart/form-data">  
-        <input type="file" name="files" class="upload" multiple/>  
-        <p id="form">Drag your files here or click in this area.</p>
-        <button id="form" type="submit">Upload</button>
+    <form id="form-form" action = "/uploadFiles" method = "post" enctype="multipart/form-data">  
+        <input id="form-input" type="file" name="files" class="upload" multiple />  
+        <p id="form-p">Drag your files here or click in this area.</p>
+        <button id="form-button" type="submit">Upload</button>
       </form>
       <div class="sidebar" class="center">
         <div id="balls" class="center">{{payload.total_number_of_download}}</div>
         <div id="balls" class="center">{{payload.total_number_of_upload}}</div>
         <div id="balls" class="center">{{payload.total_number_of_images}}</div>
-        <!-- <div id="balls" class="center">helo</div> -->
-    </div>
-    <div class="sidebar2" class="center">
-        <div id="text" class="center">number of downloads</div>
-        <div id="text" class="center">number of uploads</div>
-        <div id="text" class="center">number of total images</div>
         <div>
             <form action = "/tags" enctype="multipart/form-data">
                 <button class= "button-submit" type="submit">View Tags</button>
@@ -30,6 +24,11 @@
                 <button class= "button-submit" type="submit">View All Images</button>
             </form>
         </div>
+    </div>
+    <div class="sidebar2" class="center">
+        <div id="text" class="center">number of downloads</div>
+        <div id="text" class="center">number of uploads</div>
+        <div id="text" class="center">number of total images</div>
     </div>
 
 
