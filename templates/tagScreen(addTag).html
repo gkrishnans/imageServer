@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/tagScreen.css') }}">
+    </head>
+    <body onload="hideBlock('{{state}}')">
+        <div class="container flex-align">
+            <div class="left-view center-vertical flex-list-view center">
+                {% for tag in tags %}
+                    <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data">
+                        <input type="hidden" name="sideBar" value="true">
+                        <input type="hidden" name="image_name" value="{{payload.data}}">
+                        <input type="hidden" name="tag" value="{{tag.name}}">
+                        <button class= "button-submit button-black">{{tag.name}}</button>
+                    </form>
+                {% endfor %}
+            </div>
+                <!-- <form action = "/addTag"  method = "post" enctype="multipart/form-data" id="updateTagsBlock" class="right-view center hide-above"> -->
+                <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data" id="updateTagsBlock" class="right-view center hide-above">
+                    <div class="left-view-container center flex-list-view sticky" >
+                        <img src={{payload.url}} class="imageStyling"/>
+                        <input type="hidden" name="sideBar" value="false">
+                        <input class="input" type="text" placeholder="add tag here.." name="tag">
+                        <input class="input" type="hidden" name="image_name" value="{{payload.data}}">
+                        <button class= "button-submit button-red" type="submit" onclick="formManipulate('{{payload.url}}')">Apply tag</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/tagScreen.js') }}"></script>
+</html>

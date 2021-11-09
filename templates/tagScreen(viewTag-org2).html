@@ -10,7 +10,6 @@
             margin: 0;
             font-family: Arial;
             }
-
             .header {
             text-align: center;
             padding: 32px;
@@ -22,6 +21,7 @@
             flex-wrap: wrap;
             padding: 0 4px;
             }
+
 
             /* Create four equal columns that sits next to each other */
             .column {
@@ -112,10 +112,10 @@
             
             **/
 
-            .container {
+            .container2 {
             position: relative;
             }
-            .container:hover .overlay{
+            .container2:hover .overlay{
             opacity: 1;
             }
 
@@ -159,7 +159,7 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin: 4px 2px;
+            margin: 6px 2px;
             transition-duration: 0.4s;
             cursor: pointer;
             }
@@ -204,41 +204,195 @@
                 cursor: pointer;
                 margin: 0;
             }
+
+            /* ---adding current screen--- */
+
+            .container{
+                width: 100%;
+                flex: 1;
+            }
+
+            .flex-align{
+                display: flex;
+            }
+
+            .left-view{
+    padding: 3%;
+    width: 25%;
+    height: 100%;
+    background-image: url('/static/res/black-stone.jfif')
+
+}
+
+
+@media (max-width: 900px) {
+    
+    .flex-align{
+        display: block;
+    }
+
+    .left-view{
+        width: 100%;
+        height: 100%;
+        background-color: aquamarine;
+    }
+    
+
+}
+
+
+.center-vertical{
+    display: flex;
+    align-items: center;
+}
+
+.flex-list-view{
+    display: flex;
+    flex-direction: column;
+}
+
+.center{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+
+                .button-submit{
+    font-size: 20;
+    width: 260px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: red;
+    border-color: black;
+    border-style: none;
+    color: whitesmoke;
+    color:black;
+    margin-top: 30;
+}
+
+.button-submit:hover{
+    box-shadow:   0px 0px 10px 0px rgb(188, 235, 240);
+    text-decoration: none;
+    outline-style: none;
+}
+
+.button-black{
+    background-color: rgb(189, 197, 181);
+    border-color: white;
+    margin:5;
+    text-decoration: none;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding-top: 15;
+
+}
+
+
+.header-bar{
+    padding: 20;
+    width: 95%;
+    margin-left: 5;
+    margin-right: 25;
+    color: white;
+    letter-spacing: 2;
+    border-bottom-right-radius: 30;
+    background-color: rgb(44, 43, 43);
+
+    margin-left: 410px; 
+}
+.sticky {
+    top: 2%;
+    padding: 1%;
+    height: 7%;
+    position: sticky;
+    position: fixed; 
+    z-index: 9;
+    border-width: 2;
+    border-color: wheat;
+
+}
+
+.move-down{
+    flex: 1;
+    padding-top: 7%;
+
+}
+
+
+    .base-container{
+        height: 900;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        background-color: chartreuse;
+    }
+    .left-component{
+        background-color: chocolate;
+        flex: 1;
+        width: 30%;
+    }
+    .right-component{
+        background-color: crimson;
+        flex: 1;
+        width: 70%;
+    }
+    .right-body{
+
+        background-color: darkcyan;
+        height: 70%;
+        width: 90%;
+    }
+
         </style>
 
     </head>
 <body>
-
-<div class="row"> 
-    {% for image in payload.images %}
-    <div class="column">
-        <div class="container">
-            <img src={{image.url}} class="image" style="width:100%"/>
-            <div class="overlay center">
-                <!-- <form method ="post" action="/tags/add"> -->
-                    <form method ="post" action="/addTagContent">
-                    <button class="button button2" type="submit" name="addTag" value={{image.name}}> add tag </button>
-                    <div class="dropdown">
-                        <a class="dropbtn" href="/downloads/image?file={{image.name}}">Download</a>
-                        <div class="dropdown-content">
-                            <a href="/downloads/image?file=s_{{image.name}}">small size</a>
-                            <a href="/downloads/image?file=l_{{image.name}}">large size</a>
-                            <a href="/downloads/image?file=m_{{image.name}}">medium size</a>
-                        </div>
-                      </div>
-                  </form> 
-            </div>
-            <form method ="post" action="/getImage/{{image.name}}" >
-                <button class="viewBtn button overlay " name="filename" value="{{image.name}}" type="submit">View</button>
-            </form>
+    <div class="container flex-align">
+        <div class="left-view center-vertical flex-list-view center" >
+            {% for tag in tags %}
+                <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data">
+                    <input type="hidden" name="sideBar" value="true">
+                    <input type="hidden" name="tag" value="{{tag.name}}">
+                    <button class= "button button-submit button-black">{{tag.name}}</button>
+                </form>                
+            {% endfor %}
         </div>
+        <div class="move-down">    
+            <div class="row"> 
+            <p class="header-bar sticky">{{data.tag}}</p>
+            {% for image in data.data %}
+            <div class="column">
+        
+                <div class="container2">
+                    <img src={{image.url}} class="image" style="width:100%"/>
+                    <div class="overlay center">
+                        <!-- <form method ="post" action="/tags/add"> -->
+                            <form method ="post" action="/addTagContent">
+                            <button class="button button2" type="submit" name="addTag" value={{image.name}}> add tag </button>
+                            <div class="dropdown">
+                                <a class="dropbtn" href="/downloads/image?file={{image.name}}">Download</a>
+                                <div class="dropdown-content">
+                                    <a href="/downloads/image?file=s_{{image.name}}">small size</a>
+                                    <a href="/downloads/image?file=l_{{image.name}}">large size</a>
+                                    <a href="/downloads/image?file=m_{{image.name}}">medium size</a>
+                                </div>
+                            </div>
+                        </form> 
+                    </div>
+                    <form method ="post" action="/getImage/{{image.name}}" >
+                        <button class="viewBtn button overlay " name="filename" value="{{image.name}}" type="submit">View</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+        
+        
     </div>
-    {% endfor %}
-</div>
+    
 </body>
-<script>
-    function fun(){
-        console.log("ada poda");
-    }
-</script>
 </html>

@@ -5,6 +5,12 @@ def getAllTags():
     result = mongo.db.tags.find()
     return(list(result))
 
+def getSpecificTags(tags):
+    result = list( mongo.db.tags.find({'name': tags}))
+    if(len(result) == 0):
+        return []
+    return result[0]['tagged_images']
+
 def addTags(tags,image_name):
     result = list( mongo.db.tags.find({'name': tags}))
     img = {

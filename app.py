@@ -3,7 +3,7 @@ import os
 from fileOperations import getDataFromFile, writeDataToFile
 from imageOperations import imageSaver
 from database import mongo
-from mongodbOperations import addTags, getAllTags
+from mongodbOperations import addTags, getAllTags, getSpecificTags
 app = Flask(__name__)  
 from config import url,UPLOAD_FOLDER
 
@@ -81,10 +81,61 @@ def updateTags():
     return render_template("tagScreen.html",payload = data,data = json,state="updateTagsBlock",message=message,tags=list(getAllTags()))  
 
 
+
+
 @app.route('/tags')
 def getTags():
     return render_template("tagScreen.html",payload = {},data = json,state="updateTagsBlock",message="",tags=list(getAllTags()))  
 
 
+@app.route('/addTagContentzzzzzzzz',methods = ['POST'])
+def updateTagss():
+    tags = request.form.get("tag")
+    image_name = request.form.get("image_name")
+    message = addTags(tags,image_name)
+    image_name = ""
+    data = {
+        "url":url + "/getImage/s_" + image_name,
+        'data': image_name,
+        "state":'none'
+    }
+    return render_template("tagScreen.html",payload = data,data = json,state="updateTagsBlock",message=message,tags=list(getAllTags()))
 
 
+@app.route('/addTagContent',methods = ['POST'])
+def addTagContent():
+    image_name = request.values['addTag']
+    data = {
+        "url":url + "/getImage/s_" + image_name,
+        'data': image_name,
+    }
+    return render_template("tagScreen(addTag).html",payload = data,tags=list(getAllTags()))  
+
+
+
+
+@app.route('/tagSubmission',methods = ['POST'])
+def tagSubmission():
+    tags = request.form.get("tag")
+    if("true" == request.form.get("sideBar")):
+        return render_template("tagScreen(viewTag-org2).html",
+            state="",
+            message="",
+            tags=list(getAllTags()),
+            data={
+                "tag":tags,
+                "data":getSpecificTags(tags)
+                }
+            )  
+    else:
+        image_name = request.form.get("image_name")
+        message = addTags(tags,image_name)
+        return render_template("tagScreen(viewTag-org2).html",
+            state="updateTagsBlock",
+            message=message,
+            tags=list(getAllTags()),
+            data={
+                "tag":tags,
+                "data":getSpecificTags(tags)
+                }
+            )  

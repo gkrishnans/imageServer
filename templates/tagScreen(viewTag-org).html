@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/tagScreen.css') }}">
+    </head>
+    <body onload="hideBlock('{{state}}','{{message.message}}')">
+        <div class="container flex-align">
+            <div class="left-view center-vertical flex-list-view center" >
+                {% for tag in tags %}
+                    <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data">
+                        <input type="hidden" name="sideBar" value="true">
+                        <input type="hidden" name="tag" value="{{tag.name}}">
+                        <button class= "button-submit button-black">{{tag.name}}</button>
+                    </form>                
+                {% endfor %}
+            </div>
+                <div id="TagListBlock" class="right-view-list">
+                    <p class="header-bar">{{data.tag}}</p>
+                    {% for image in data.data %}
+                            <div class="column">
+                                <div class="container2">
+                                    <img src={{image.url}} class="image" style="width:100%"/>
+                                    <div class="overlay center">
+                                        <form method ="post" action="/tags/add" class="center">
+                                            <div class="dropdown">
+                                                <a class="dropbtn" href="/downloads/image?file={{image.name}}">Download</a>
+                                                <div class="dropdown-content">
+                                                    <a href="/downloads/image?file=s_{{image.name}}">small size</a>
+                                                    <a href="/downloads/image?file=l_{{image.name}}">large size</a>
+                                                    <a href="/downloads/image?file=m_{{image.name}}">medium size</a>
+                                                </div>
+                                              </div>
+                                          </form> 
+                                    </div>
+                                    <div class="overlay-view"></div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/tagScreen.js') }}"></script>
+</html>
+
