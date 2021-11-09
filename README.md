@@ -1,6 +1,6 @@
 **Image Server**
 <br /><br />
-imageServer is the project done to store images of 3 different sizes ( _small, medium, large_ ) image<br />
+  - imageServer is the project done to store images of 3 different sizes ( _small, medium, large_ ) image<br />
 
 **how anyone can run my project, steps are as follow**
 <br /><br />
@@ -15,12 +15,13 @@ imageServer is the project done to store images of 3 different sizes ( _small, m
 <br />
 **Tools and Libraries used**
 <br /><br />
-  flask + MongoDB<br />
-  Flask-Pymongo<br />
-  pillow<br />
+  - flask + MongoDB<br />
+  - Flask-Pymongo<br />
+  - pillow<br />
 <br />
+
 **Features**
 <br /><br />
-  you can also download image from the server<br />
-  you can add tags for each image<br />
-  you can categories them accordingly<br />
+  - you can also download image from the server<br />
+  - you can add tags for each image<br />
+  - you can categories them accordingly<br />
