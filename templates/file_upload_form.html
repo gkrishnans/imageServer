@@ -12,15 +12,16 @@
         <button id="form-button" type="submit">Upload</button>
       </form>
       <div>
-          
       </div>
       <div class="sidebar" class="center">
         <div id="balls" class="center">{{payload.total_number_of_download}}</div>
         <div id="balls" class="center">{{payload.total_number_of_upload}}</div>
         <div id="balls" class="center">{{payload.total_number_of_images}}</div>
         <div>
-            <form action = "/tags" enctype="multipart/form-data">
+            <form action = "/tagSubmission" enctype="multipart/form-data" method="post">
                 <button class= "button-submit" type="submit">View Tags</button>
+                <input type="hidden" name="sideBar" value="home">
+                <input type="hidden" name="tag" value="">
             </form>
             <form action = "/getAllImages" enctype="multipart/form-data">
                 <button class= "button-submit" type="submit">View All Images</button>

@@ -1,7 +1,3 @@
-.container{
-    width: 100%;
-    flex: 1;
-}
 
 .header-bar{
     padding: 20;
@@ -110,6 +106,19 @@
     opacity: 1;
 }
 
+.left-view-container-without-image{
+    padding-top: 65;
+    margin-top: 10;
+    
+    width: 400px;
+    height: 490;
+    border-radius: 10px;
+    font-size: 20;
+    /* background-image: url("{{ url_for('static', filename='res/background.jpg') }}"); */
+    opacity: 1;
+}
+
+
 
 
 .input{
@@ -135,13 +144,14 @@
 .button-submit{
     font-size: 20;
     width: 260px;
-    height: 40px;
     border-radius: 10px;
     background-color: red;
     border-color: black;
     border-style: none;
     color: whitesmoke;
     color:black;
+    padding: 12px;
+
 }
 
 .button-submit:hover{
@@ -436,12 +446,6 @@
                 
                 **/
     
-                .container {
-                position: relative;
-                }
-                .container:hover .overlay{
-                opacity: 1;
-                }
     
                 .overlay {
                 position: absolute;
@@ -528,4 +532,12 @@
                     cursor: pointer;
                     margin: 0;
                 }
-    
+
+
+/* 
+
+
+
+
+
+*/

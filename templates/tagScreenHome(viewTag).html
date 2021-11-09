@@ -1,7 +1,8 @@
 <html>
+    <head>
+    </head>
     <style>
-
-        .container {
+                .container {
         position: relative;
         }
         .container:hover .overlay{
@@ -83,6 +84,19 @@ background-image: url('/static/res/background.jpg')
 opacity: 1;
 }
 
+.left-view-container-without-image{
+    padding-top: 65;
+    margin-top: 10;
+    
+    width: 400px;
+    height: 490;
+    border-radius: 10px;
+    font-size: 20;
+    /* background-image: url("{{ url_for('static', filename='res/background.jpg') }}"); */
+    opacity: 1;
+}
+
+
 .sticky {
 top: 2%;
 position: sticky;
@@ -148,55 +162,31 @@ color: black;
 display: block;
 }
 .left-view{
-display: none;
-}
-
-.right-view{
-    width: 100%;
-    height: 100%;
-}
-.left-view-container{
-    width: 100%;
-    height: 100%;
-}
-.flex-list-view{
-    width: 100%;
-    height: 100%;
-}
-
-.sticky{
-
-position: relative; 
+width: 100%;
+height: 100%;
+background-color: aquamarine;
 }
 
 }
-</style>
-
-<body onload="hideBlock()">
-<div class="container flex-align">
-    <div class="left-view center-vertical flex-list-view center">
-        {% for tag in tags %}
-            <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data">
-                <input type="hidden" name="sideBar" value="true">
-                <input type="hidden" name="image_name" value="{{payload.data}}">
-                <input type="hidden" name="tag" value="{{tag.name}}">
-                <button class= "button-submit button-black">{{tag.name}}</button>
-            </form>
-        {% endfor %}
-    </div>
-        <!-- <form action = "/addTag"  method = "post" enctype="multipart/form-data" id="updateTagsBlock" class="right-view center hide-above"> -->
-        <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data" id="updateTagsBlock" class="right-view center hide-above">
-            <div class="left-view-container center flex-list-view sticky" >
-                <img src={{payload.url}} class="imageStyling"/>
-                <input type="hidden" name="sideBar" value="false">
-                <input class="input" type="text" placeholder="add tag here.." name="tag">
-                <input class="input" type="hidden" name="image_name" value="{{payload.data}}">
-                <button class= "button-submit button-red" type="submit" onclick="formManipulate('{{payload.url}}')">Apply tag</button>
+    </style>
+    <body onload="hideBlock()">
+        <div class="container flex-align">
+            <div class="left-view center-vertical flex-list-view center">
+                {% for tag in tags %}
+                    <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data">
+                        <input type="hidden" name="sideBar" value="true">
+                        <input type="hidden" name="tag" value="{{tag.name}}">
+                        <button class= "button-submit button-black">{{tag.name}}</button>
+                    </form>
+                {% endfor %}
             </div>
-        </form>
-    </div>
-</div>
-</body>
-
+            <form action = "/tagSubmission"  method = "post" enctype="multipart/form-data" id="updateTagsBlock" class="right-view center hide-above">
+                <div class="left-view-container-without-image center flex-list-view sticky" >
+                    <p>try out any tags!!</p>
+                </div>
+            </form>
+        </div>
+        </div>
+    </body>
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/tagScreen.js') }}"></script>
 </html>

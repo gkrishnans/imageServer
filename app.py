@@ -20,6 +20,23 @@ def upload():
     return render_template("file_upload_form.html",payload=payload)  
 
 
+@app.route('/index')  
+def uploads():
+
+    #here getting informations like total no of uploads and downloads and no of images in image server
+    payload = {
+        "total_number_of_images" : len(os.listdir(UPLOAD_FOLDER)),
+        "total_number_of_upload" : getDataFromFile("total_no_of_upload"),
+        "total_number_of_download" : getDataFromFile("total_no_of_download")
+    }  
+    return render_template("file_upload_form.html",payload=payload)  
+
+
+@app.route('/goback')
+def goback():
+    return redirect('/')
+
+
 #getting all images 
 @app.route('/getAllImages')
 def getAllImages():
@@ -29,17 +46,21 @@ def getAllImages():
 #uploading single or a multiple file 
 @app.route('/uploadFiles', methods = ['POST'])  
 def fileUpload():  
+    file_count = 0
     if request.method == 'POST':  
         files = request.files.getlist("files")
         for file in files:
             #checking whether the given file is a image file else ignoring them silently
             if file.filename.split(".")[-1] in ['jpg','jfif','jpeg','png']:
+                file_count+=1
                 #storing image in (original, small, medium, large) sized image in the directory
                 imageSaver(file)
         #writing the total no of uploads in a text file
-        writeDataToFile("total_no_of_upload",int(getDataFromFile("total_no_of_upload"))+1)
-        return redirect(url_for('getAllImages'))
-
+        if(file_count != 0):
+            writeDataToFile("total_no_of_upload",int(getDataFromFile("total_no_of_upload"))+1)
+            return redirect(url_for('getAllImages'))
+        else:
+            return render_template("noFilesSelected.html")
 
 #getting image directly from a directory
 @app.route('/getImage/<path:filename>', methods=['GET', 'POST'])
@@ -57,51 +78,9 @@ def getImageDownload():
 
 
 
-@app.route('/tags/add',methods = ['POST'])
-def addTagss():
-    image_name = request.values['addTag']
-    data = {
-        "url":url + "/getImage/s_" + image_name,
-        'data': image_name,
-        "state":'none'
-    }
-    return render_template("tagScreen.html",payload = data,data = json,state="TagListBlock",message="",tags=list(getAllTags()))  
-
-@app.route('/addTag',methods = ['POST'])
-def updateTags():
-    tags = request.form.get("tag")
-    image_name = request.form.get("image_name")
-    message = addTags(tags,image_name)
-    image_name = ""
-    data = {
-        "url":url + "/getImage/s_" + image_name,
-        'data': image_name,
-        "state":'none'
-    }
-    return render_template("tagScreen.html",payload = data,data = json,state="updateTagsBlock",message=message,tags=list(getAllTags()))  
 
 
-
-
-@app.route('/tags')
-def getTags():
-    return render_template("tagScreen.html",payload = {},data = json,state="updateTagsBlock",message="",tags=list(getAllTags()))  
-
-
-@app.route('/addTagContentzzzzzzzz',methods = ['POST'])
-def updateTagss():
-    tags = request.form.get("tag")
-    image_name = request.form.get("image_name")
-    message = addTags(tags,image_name)
-    image_name = ""
-    data = {
-        "url":url + "/getImage/s_" + image_name,
-        'data': image_name,
-        "state":'none'
-    }
-    return render_template("tagScreen.html",payload = data,data = json,state="updateTagsBlock",message=message,tags=list(getAllTags()))
-
-
+#getting tag content / viewing all the tags
 @app.route('/addTagContent',methods = ['POST'])
 def addTagContent():
     image_name = request.values['addTag']
@@ -113,29 +92,32 @@ def addTagContent():
 
 
 
-
+#adding/updating tags for an image
 @app.route('/tagSubmission',methods = ['POST'])
 def tagSubmission():
-    tags = request.form.get("tag")
+    tags_name = request.form.get("tag")
+    #to verify that /tagSubmission is called either by tag adding button or else view tag button
+    if("home" == request.form.get("sideBar")):
+        return render_template("tagScreenHome(viewTag).html",
+            tags=list(getAllTags()),
+            )  
     if("true" == request.form.get("sideBar")):
-        return render_template("tagScreen(viewTag-org2).html",
-            state="",
-            message="",
+        return render_template("tagScreen(viewTag).html",
             tags=list(getAllTags()),
             data={
-                "tag":tags,
-                "data":getSpecificTags(tags)
+                "message":{"message":""},
+                "tag":tags_name,
+                "data":getSpecificTags(tags_name)
                 }
             )  
     else:
         image_name = request.form.get("image_name")
-        message = addTags(tags,image_name)
-        return render_template("tagScreen(viewTag-org2).html",
-            state="updateTagsBlock",
-            message=message,
+        message = addTags(tags_name,image_name)
+        return render_template("tagScreen(viewTag).html",
             tags=list(getAllTags()),
             data={
-                "tag":tags,
-                "data":getSpecificTags(tags)
+                "message":message,
+                "tag":tags_name,
+                "data":getSpecificTags(tags_name)
                 }
             )  
