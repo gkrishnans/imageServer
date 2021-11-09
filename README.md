@@ -24,3 +24,11 @@
   - you can also download image from the server<br />
   - you can add tags for each image<br />
   - you can categories them accordingly<br />
+
+**Snapshots**<br />
+<br /><br />_Landing page..._<br /><br />
+![image](https://user-images.githubusercontent.com/63493140/140873658-8c0fa2d5-7a0c-43cd-a490-076802175b49.png)
+<br /><br />_uploading mulitple images..._<br /><br />
+![image](https://user-images.githubusercontent.com/63493140/140873917-1b809cd6-8034-48af-87c8-1b8a321a22cf.png)
+<br /><br />_uploading mulitple images..._<br /><br />
+
