@@ -2,7 +2,7 @@
 <br />
   - imageServer is the project done to store images of 3 different sizes ( _small, medium, large_ ) image<br />
 
-**how anyone can run my project, steps are as follow**
+**How anyone can run my project, steps are as follow**
 <br /><br />
   git clone https://github.com/gkrishnans/imageServer.git -b original<br />
   cd imageServer<br />
@@ -18,7 +18,6 @@
   - flask + MongoDB<br />
   - Flask-Pymongo<br />
   - pillow<br />
-<br />
 
 **Features**
 <br />
